@@ -1,18 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
 const cors = require('cors');
-// const mongoose = require('mongoose');
 const connectDB = require('./config/database');
 
-// Settings
-dotenv.config();
+// Environment variables
 const PORT = process.env.PORT || 3000;
-// const CONNECTION = process.env.MONGODB_URI || 'mongodb://localhost:27017/express-mongodb';
+const dotenv = require('dotenv');
+dotenv.config();
 
+// Settings
 const app = express();
-// require('./config/database');
-
 app.set('port', PORT);
 app.set('json spaces', 2);
 
@@ -30,8 +27,6 @@ app.use('/api/deliveries', require('./routes/delivery.routes'));
 // Starting the server
 const start = async () => {
   try {
-    //await mongoose.connect(CONNECTION);
-    //console.log('Database connected');
     app.listen(app.get('port'), () => {
       console.log(`Server is running on port ${app.get('port')}`);
     });

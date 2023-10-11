@@ -15,4 +15,3 @@ const connectDB = async (cb) => {
 }
 
 module.exports = connectDB;
-//mongoose.connect(CONNECTION).then(db => console.log('Database connected')).catch(err => console.log(err.message));
