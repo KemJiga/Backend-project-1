@@ -12,6 +12,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+    default: "",
     //required: true,
   },
   ID:{
@@ -20,17 +21,22 @@ const userSchema = new Schema({
     unique: true,
   },
   type: {
-    type: String,
+    type: [String],
     enum: ['Admin', 'Delivery', 'Customer'],
-    default: 'Customer',
+    default: ['Customer'],
   },
   createdOn: {
     type: Date,
     default: Date.now,
   },
-  isDeleted: {
-    type: Boolean,
-    default: false,
+  updatedAt: {
+      type: Date,
+      default: Date.now,
+  },
+  deletedAt: {
+      type: Date,
+      default: Date.now,
+      default: null,
   },
 });
 

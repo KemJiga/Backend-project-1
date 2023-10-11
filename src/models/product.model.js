@@ -9,23 +9,23 @@ const productSchema = new Schema({
     price: {
         type: Number,
     },
-    ID:{
-        type: Number,
-        required: true,
-        unique: true,
-    },
     category: {
         type: String,
         enum: ['Food', 'Drink', 'Dessert'],
         default: 'Food',
     },
-    createdOn: {
+    createdAt: {
         type: Date,
         default: Date.now,
     },
-    isDeleted: {
-        type: Boolean,
-        default: false,
+    updatedAt: {
+        type: Date,
+        default: Date.now,
+    },
+    deletedAt: {
+        type: Date,
+        default: Date.now,
+        default: null,
     },
     });
 
