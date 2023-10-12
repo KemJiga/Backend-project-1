@@ -13,6 +13,6 @@ router.get('/', getProducts); // Get all products by restaurant and/or category
 router.get('/:id', getProductById);
 router.post('/', createProduct);
 router.delete('/:id', deleteProduct);
-router.put('/:id', updateProduct);
+router.patch('/:id', updateProduct);
 
 module.exports = router;

@@ -27,6 +27,7 @@ async function getProductById(req, res) {
   }
 }
 
+// Implement search by restaurant on model file
 async function getProducts(req, res) {
   try {
     const products = await Product.find();
@@ -37,8 +38,41 @@ async function getProducts(req, res) {
   }
 }
 
-async function deleteProduct(req, res) {}
+async function deleteProduct(req, res) {
+  const { id } = req.params;
+  const update = { deletedAt: Date.now(), updatedAt: Date.now() };
+  try {
+    const product = await Product.findOneAndUpdate({ _id: id }, update, {
+      new: true,
+    });
+    if (product.length === 0) {
+      res.status(404).json({ error: 'Product not found' });
+    } else {
+      res.status(200).json(product);
+      console.log('product deleted');
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}
 
-async function updateProduct(req, res) {}
+async function updateProduct(req, res) {
+  const { id } = req.params;
+  const { name, price, category, deletedAt } = req.body;
+  const update = { name, price, category, deletedAt, updatedAt: Date.now() };
+  try {
+    const product = await Product.findOneAndUpdate({ _id: id }, update, {
+      new: true,
+    });
+    if (product.length === 0) {
+      res.status(404).json({ error: 'Product not found' });
+    } else {
+      res.status(200).json(product);
+      console.log('product deleted');
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+}
 
 module.exports = { createProduct, getProductById, getProducts, deleteProduct, updateProduct };
