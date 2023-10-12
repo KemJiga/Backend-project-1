@@ -16,9 +16,9 @@ async function getUser(req, res) {
 }
 
 async function getUserById(req, res) {
-  const id = req.params.id;
+  const { id } = req.params;
   try {
-    const user = await User.find({ ID: id });
+    const user = await User.find({ _id: id });
     if (user.length === 0) {
       res.status(404).json({ error: 'User not found' });
     } else {
@@ -43,10 +43,10 @@ async function createUser(req, res) {
 }
 
 async function deleteUser(req, res) {
-  const { ID } = req.params.id;
-  const update = { isDeleted: true };
+  const { id } = req.params;
+  const update = { deletedAt: Date.now(), updatedAt: Date.now() };
   try {
-    const user = await User.findOneAndUpdate(ID, update, {
+    const user = await User.findOneAndUpdate({ _id: id }, update, {
       new: true,
     });
     if (user.length === 0) {
@@ -61,12 +61,13 @@ async function deleteUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  const { ID } = req.params.id;
-  const { name, email, password, isDeleted } = req.body;
+  const { id } = req.params;
+  const { name, email, password, deletedAt } = req.body;
+  const updatedAt = Date.now();
   try {
     const user = await User.findOneAndUpdate(
-      ID,
-      { name, email, password, isDeleted },
+      { _id: id },
+      { name, email, password, updatedAt, deletedAt },
       {
         new: true,
       }
