@@ -29,8 +29,13 @@ async function getProductById(req, res) {
 
 // Implement search by restaurant on model file
 async function getProducts(req, res) {
+  const { category, restaurant } = req.body;
+  const query = {};
+  if (category) query.category = category;
+  if (restaurant) query.restaurant = restaurant;
+  console.log(query);
   try {
-    const products = await Product.find();
+    const products = await Product.find(query);
     res.status(200).json(products);
     console.log('products displayed');
   } catch (e) {

@@ -32,7 +32,6 @@ async function getRestaurants(req, res) {
   const query = {};
   if (name) query.name = { $regex: name, $options: 'i' };
   if (category) query.category = category;
-  console.log(query);
   try {
     const restaurants = await Restaurant.find(query);
     if (restaurants.length === 0) {
