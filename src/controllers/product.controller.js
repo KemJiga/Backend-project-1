@@ -15,7 +15,7 @@ async function createProduct(req, res) {
 async function getProductById(req, res) {
   const { id } = req.params;
   try {
-    const product = await Product.find({ _id: id });
+    const product = await Product.findById(id);
     if (product.length === 0) {
       res.status(404).json({ error: 'Product not found' });
     } else {
@@ -68,7 +68,7 @@ async function updateProduct(req, res) {
       res.status(404).json({ error: 'Product not found' });
     } else {
       res.status(200).json(product);
-      console.log('product deleted');
+      console.log('product updated');
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
