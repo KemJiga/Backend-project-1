@@ -1,9 +1,9 @@
 const Product = require('../models/product.model');
 
 async function createProduct(req, res) {
-  const { name, price, category } = req.body;
+  const { name, price, category, restaurant } = req.body;
   try {
-    const newProduct = new Product({ name, price, category });
+    const newProduct = new Product({ name, price, category, restaurant });
     await newProduct.save();
     res.status(201).json(newProduct);
     console.log('product added');

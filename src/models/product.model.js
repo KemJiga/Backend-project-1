@@ -19,10 +19,10 @@ const productSchema = new Schema({
   restaurant: {
     type: Schema.Types.ObjectId,
     ref: 'restaurants',
-    //required: [true, "Product must belong to a restaurant"],
+    required: [true, "Product must belong to a restaurant"],
     validate: {
       async validator(restaurantId) {
-        const restaurant = await mongoose.model('restaurants').findById(restaurantId);
+        const restaurant = await mongoose.model('Restaurants').findById(restaurantId);
         if (!restaurant) {
           throw new Error('Restaurant not found');
         }
