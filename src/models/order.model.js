@@ -9,7 +9,7 @@ const orderSchema = new Schema({
         validate: {
           async validator(userId) {
             const user = await mongoose.model('Users').findById(userId);
-            if (!user) {
+            if (!user || user.deletedAt !== null) {
               throw new Error('User not found');
             }
           },
@@ -22,7 +22,7 @@ const orderSchema = new Schema({
         validate: {
           async validator(restaurantId) {
             const restaurant = await mongoose.model('Restaurants').findById(restaurantId);
-            if (!restaurant) {
+            if (!restaurant || restaurant.deletedAt !== null) {
               throw new Error('Restaurant not found');
             }
           },
@@ -30,17 +30,8 @@ const orderSchema = new Schema({
     },
     products: {
         type: Map,
-        of: Schema.Types.ObjectId,
-        ref: 'products',
+        of: Number,
         required: [true, "Order must have products"],
-        validate: {
-          async validator(productId) {
-            const product = await mongoose.model('Products').findById(productId);
-            if (!product) {
-              throw new Error('Product not found');
-            }
-          },
-        },
     },
     status: {
         type: String,
