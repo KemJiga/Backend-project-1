@@ -23,7 +23,12 @@ const productSchema = new Schema({
   },
   category: {
     type: [String],
-    required: [true, 'Category is required'],
+    validate: {
+      validator(category) {
+        return category.length > 0;
+      },
+      message: '{VALUE} is not a valid category',
+    },
   },
   restaurant: {
     type: Schema.Types.ObjectId,
@@ -32,7 +37,7 @@ const productSchema = new Schema({
     validate: {
       async validator(restaurantId) {
         const restaurant = await mongoose.model('Restaurants').findById(restaurantId);
-        if (!restaurant) {
+        if (!restaurant || restaurant.deletedAt !== null) {
           throw new Error('Restaurant not found');
         }
       },
