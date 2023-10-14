@@ -65,18 +65,17 @@ async function updateUser(req, res) {
   const { name, email, password, phone } = req.body;
   const updatedAt = Date.now();
   try {
-    const user = await User.findById(id);
-    if (user.length === 0 || user.deletedAt !== null) {
+    const user = await User.findOneAndUpdate(
+      { _id: id, deletedAt: null },
+      { name, email, password, phone, updatedAt },
+      {
+        new: true,
+      }
+    );
+    if (user === null || user.length === 0) {
       res.status(404).json({ error: 'User not found' });
     } else {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: id },
-        { name, email, password, phone, updatedAt },
-        {
-          new: true,
-        }
-      );
-      res.status(200).json(updatedUser);
+      res.status(200).json(user);
       console.log('user updated');
     }
   } catch (e) {
