@@ -20,9 +20,9 @@ const userSchema = new Schema({
     required: [true, 'Phone number is required'],
   },
   type: {
-    type: [String],
+    type: String,
     enum: ['Restaurant admin', 'Delivery', 'Client'],
-    required: true,
+    required: [true, 'Type is required']
   },
   createdOn: {
     type: Date,
