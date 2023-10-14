@@ -4,26 +4,25 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Name is required'],
   },
   email: {
     type: String,
     unique: true,
-    required: true,
+    required: [true, 'Email is required'],
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'Password is required']
   },
-  ID:{
-    type: Number,
-    required: true,
-    unique: true,
+  phone:{
+    type: String,
+    required: [true, 'Phone number is required'],
   },
   type: {
     type: [String],
-    enum: ['Admin', 'Delivery', 'Customer'],
-    default: ['Customer'],
+    enum: ['Restaurant admin', 'Delivery', 'Client'],
+    required: true,
   },
   createdOn: {
     type: Date,
