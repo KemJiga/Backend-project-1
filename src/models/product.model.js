@@ -5,16 +5,25 @@ const productSchema = new Schema({
   name: {
     type: String,
     trim: true,
-    required: true,
+    required: [true, 'Name is required'],
+  },
+  description: {
+    type: String,
+    required: [true, 'Description is required'],
+    validate: {
+      validator(description) {
+        return description.length <= 150 && description.length >= 10;
+      },
+      message: '{VALUE} is not a valid description',
+    }
   },
   price: {
     type: Number,
     required: [true, 'Price is required'],
   },
   category: {
-    type: String,
-    enum: ['Food', 'Drink', 'Dessert'],
-    default: 'Food',
+    type: [String],
+    required: [true, 'Category is required'],
   },
   restaurant: {
     type: Schema.Types.ObjectId,
