@@ -16,7 +16,7 @@ async function getRestaurantById(req, res) {
   const { id } = req.params;
   try {
     const restaurant = await Restaurant.findById(id);
-    if (restaurant.length === 0) {
+    if (restaurant.length === 0 || restaurant.deletedAt !== null) {
       res.status(404).json({ error: 'restaurant not found' });
     } else {
       res.status(200).json(restaurant);
@@ -29,7 +29,7 @@ async function getRestaurantById(req, res) {
 
 async function getRestaurants(req, res) {
   const { name, category } = req.body;
-  const query = {};
+  const query = { deletedAt: null };
   if (name) query.name = { $regex: name, $options: 'i' };
   if (category) query.category = category;
   try {
@@ -66,10 +66,10 @@ async function deleteRestaurant(req, res) {
 
 async function updateRestaurant(req, res) {
   const { id } = req.params;
-  const { name, category, popularity, deletedAt } = req.body;
-  const update = { name, category, popularity, deletedAt, updatedAt: Date.now() };
+  const { name, category, popularity } = req.body;
+  const update = { name, category, popularity, updatedAt: Date.now() };
   try {
-    const restaurant = await Restaurant.findOneAndUpdate({ _id: id }, update, {
+    const restaurant = await Restaurant.findOneAndUpdate({ _id: id, deletedAt: null }, update, {
       new: true,
     });
     if (restaurant.length === 0) {
