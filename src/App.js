@@ -22,7 +22,7 @@ app.use(express.json());
 app.use('/api/users', require('./routes/user.routes'));
 app.use('/api/restaurants', require('./routes/restaurant.routes'));
 app.use('/api/products', require('./routes/product.routes'));
-app.use('/api/deliveries', require('./routes/delivery.routes'));
+app.use('/api/orders', require('./routes/order.routes'));
 
 // Starting the server
 const start = async () => {
