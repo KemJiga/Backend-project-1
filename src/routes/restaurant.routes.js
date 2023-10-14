@@ -9,7 +9,7 @@ const {
   updateRestaurant,
 } = require('../controllers/restaurant.controller');
 
-router.get('/', getRestaurants); // Get all restaurants by category and/or name
+router.get('/', getRestaurants); 
 router.get('/:id', getRestaurantById);
 router.post('/',createRestaurant);
 router.delete('/:id', deleteRestaurant);
