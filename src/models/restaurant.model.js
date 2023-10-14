@@ -7,6 +7,11 @@ const restaurantSchema = new Schema({
     trim: true,
     required: [true, 'Name is required'],
   },
+  address: {
+    type: String,
+    trim: true,
+    required: [true, 'Address is required'],
+  },
   category: {
     type: String,
     enum: ['Regular', 'Fast', 'Gourmet'],
