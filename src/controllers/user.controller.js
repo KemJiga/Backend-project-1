@@ -46,10 +46,10 @@ async function deleteUser(req, res) {
   const { id } = req.params;
   const update = { deletedAt: Date.now(), updatedAt: Date.now() };
   try {
-    const user = await User.findOneAndUpdate({ _id: id }, update, {
+    const user = await User.findOneAndUpdate({ _id: id, deletedAt:null }, update, {
       new: true,
     });
-    if (user.length === 0) {
+    if (user === null || user.length === 0) {
       res.status(404).json({ error: 'User not found' });
     } else {
       res.status(200).json(user);

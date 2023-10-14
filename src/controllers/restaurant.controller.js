@@ -50,10 +50,10 @@ async function deleteRestaurant(req, res) {
   const { id } = req.params;
   const update = { deletedAt: Date.now(), updatedAt: Date.now() };
   try {
-    const restaurant = await Restaurant.findOneAndUpdate({ _id: id }, update, {
+    const restaurant = await Restaurant.findOneAndUpdate({ _id: id, deletedAt: null }, update, {
       new: true,
     });
-    if (restaurant.length === 0) {
+    if (restaurant === null || restaurant.length === 0) {
       res.status(404).json({ error: 'restaurant not found' });
     } else {
       res.status(200).json(restaurant);
@@ -72,7 +72,7 @@ async function updateRestaurant(req, res) {
     const restaurant = await Restaurant.findOneAndUpdate({ _id: id, deletedAt: null }, update, {
       new: true,
     });
-    if (restaurant.length === 0) {
+    if (restaurant === null || restaurant.length === 0) {
       res.status(404).json({ error: 'restaurant not found' });
     } else {
       res.status(200).json(restaurant);

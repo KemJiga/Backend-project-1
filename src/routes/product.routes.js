@@ -9,7 +9,7 @@ const {
   updateProduct,
 } = require('../controllers/product.controller');
 
-router.get('/', getProducts); // Get all products by restaurant and/or category
+router.get('/', getProducts);
 router.get('/:id', getProductById);
 router.post('/', createProduct);
 router.delete('/:id', deleteProduct);

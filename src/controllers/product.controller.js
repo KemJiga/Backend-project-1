@@ -16,7 +16,7 @@ async function getProductById(req, res) {
   const { id } = req.params;
   try {
     const product = await Product.findById(id);
-    if (product.length === 0) {
+    if (product.length === 0 || product.deletedAt !== null) {
       res.status(404).json({ error: 'Product not found' });
     } else {
       res.status(200).json(product);
@@ -27,13 +27,11 @@ async function getProductById(req, res) {
   }
 }
 
-// Implement search by restaurant on model file
 async function getProducts(req, res) {
   const { category, restaurant } = req.body;
-  const query = {};
+  const query = { deletedAt: null };
   if (category) query.category = category;
   if (restaurant) query.restaurant = restaurant;
-  console.log(query);
   try {
     const products = await Product.find(query);
     res.status(200).json(products);
@@ -47,10 +45,10 @@ async function deleteProduct(req, res) {
   const { id } = req.params;
   const update = { deletedAt: Date.now(), updatedAt: Date.now() };
   try {
-    const product = await Product.findOneAndUpdate({ _id: id }, update, {
+    const product = await Product.findOneAndUpdate({ _id: id, deletedAt: null }, update, {
       new: true,
     });
-    if (product.length === 0) {
+    if (product === null || product.length === 0) {
       res.status(404).json({ error: 'Product not found' });
     } else {
       res.status(200).json(product);
@@ -66,10 +64,10 @@ async function updateProduct(req, res) {
   const { name, price, category, deletedAt } = req.body;
   const update = { name, price, category, deletedAt, updatedAt: Date.now() };
   try {
-    const product = await Product.findOneAndUpdate({ _id: id }, update, {
+    const product = await Product.findOneAndUpdate({ _id: id, deletedAt: null }, update, {
       new: true,
     });
-    if (product.length === 0) {
+    if (product === null || product.length === 0) {
       res.status(404).json({ error: 'Product not found' });
     } else {
       res.status(200).json(product);
