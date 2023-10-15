@@ -28,7 +28,7 @@ async function getProductById(req, res) {
 }
 
 async function getProducts(req, res) {
-  const { category, restaurant } = req.body;
+  const { category, restaurant } = req.query;
   const query = { deletedAt: null };
   if (category) query.category = category;
   if (restaurant) query.restaurant = restaurant;

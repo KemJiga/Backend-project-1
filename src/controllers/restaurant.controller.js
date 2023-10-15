@@ -1,9 +1,9 @@
 const Restaurant = require('../models/restaurant.model');
 
 async function createRestaurant(req, res) {
-  const { name, category } = req.body;
+  const { name, category, address } = req.body;
   try {
-    const newRestaurant = new Restaurant({ name, category });
+    const newRestaurant = new Restaurant({ name, category, address });
     await newRestaurant.save();
     res.status(201).json(newRestaurant);
     console.log('restaurant added');
@@ -28,16 +28,17 @@ async function getRestaurantById(req, res) {
 }
 
 async function getRestaurants(req, res) {
-  const { name, category } = req.body;
+  const { name, category } = req.query;
   const query = { deletedAt: null };
   if (name) query.name = { $regex: name, $options: 'i' };
   if (category) query.category = category;
+  console.log(query);
   try {
-    const restaurants = await Restaurant.find(query);
+    const restaurants = await Restaurant.find(query).sort({ popularity: -1 });
     if (restaurants.length === 0) {
       res.status(404).json({ error: 'restaurant not found' });
     } else {
-      restaurants.sort((a, b) => b.popularity - a.popularity);
+      // restaurants.sort((a, b) => b.popularity - a.popularity);
       res.status(200).json(restaurants);
       console.log('restaurants displayed');
     }
@@ -66,8 +67,8 @@ async function deleteRestaurant(req, res) {
 
 async function updateRestaurant(req, res) {
   const { id } = req.params;
-  const { name, category, popularity } = req.body;
-  const update = { name, category, popularity, updatedAt: Date.now() };
+  const { name, category, popularity, address } = req.body;
+  const update = { name, category, popularity, address, updatedAt: Date.now() };
   try {
     const restaurant = await Restaurant.findOneAndUpdate({ _id: id, deletedAt: null }, update, {
       new: true,
