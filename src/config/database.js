@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const CONNECTION = process.env.MONGODB_URI || 'mongodb://localhost:27017/express-mongodb';
+const CONNECTION = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/express-mongodb';
 const connectDB = async (cb) => {
     try {
         await mongoose.connect(CONNECTION)
