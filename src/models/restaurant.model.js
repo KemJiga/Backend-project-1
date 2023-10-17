@@ -20,7 +20,6 @@ const restaurantSchema = new Schema({
   popularity: {
     type: Number,
     default: 0,
-    required: [true, 'Popularity is required'],
     validate: {
       validator(num) {
         return num >= 0;

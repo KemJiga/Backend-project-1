@@ -20,6 +20,12 @@ const productSchema = new Schema({
   price: {
     type: Number,
     required: [true, 'Price is required'],
+    validate: {
+      validator(num) {
+        return num >= 0;
+      },
+      message: '{VALUE} is not a valid popularity number',
+    },
   },
   category: {
     type: [String],
