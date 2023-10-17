@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 
 async function getUser(req, res) {
+  // se obtiene del query o del body?
   const { email, password } = req.body;
   try {
     const user = await User.find({ email, password, deletedAt: null });

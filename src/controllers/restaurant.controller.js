@@ -38,7 +38,6 @@ async function getRestaurants(req, res) {
     if (restaurants.length === 0) {
       res.status(404).json({ error: 'restaurant not found' });
     } else {
-      // restaurants.sort((a, b) => b.popularity - a.popularity);
       res.status(200).json(restaurants);
       console.log('restaurants displayed');
     }
