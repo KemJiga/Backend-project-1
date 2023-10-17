@@ -5,8 +5,7 @@ async function createOrder(req, res) {
   const { user, restaurant, products, status } = req.body;
   const update = { $inc: { popularity: 1 }, updatedAt: Date.now() };
   try {
-    // chechk: add popularity to restaurant
-    const rest = Restaurant.findOneAndUpdate({ _id: restaurant }, update, {new: true});
+    await Restaurant.findByIdAndUpdate(restaurant, update);
     const newOrder = new Order({ user, restaurant, products: new Map(products), status });
     await newOrder.save();
     res.status(201).json(newOrder);
