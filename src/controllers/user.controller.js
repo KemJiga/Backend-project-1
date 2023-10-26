@@ -1,7 +1,6 @@
 const User = require('../models/user.model');
 
 async function getUser(req, res) {
-  // se obtiene del query o del body?
   const { email, password } = req.body;
   try {
     const user = await User.find({ email, password, deletedAt: null });
@@ -62,13 +61,11 @@ async function deleteUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  const { id } = req.params;
-  const { name, email, password, phone } = req.body;
-  const updatedAt = Date.now();
+  const { id, name, email, password, phone } = req.body;
   try {
     const user = await User.findOneAndUpdate(
       { _id: id, deletedAt: null },
-      { name, email, password, phone, updatedAt },
+      { name, email, password, phone, updatedAt: Date.now() },
       {
         new: true,
       }
