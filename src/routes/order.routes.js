@@ -14,7 +14,7 @@ router.post('/', createOrder);
 router.get('/created/', getCreatedOrders);
 router.get('/:id', getOrderById);
 router.get('/', getFilteredOrders);
-router.put('/:id', updateOrder);
+router.patch('/:id', updateOrder);
 router.delete('/:id', deleteOrder);
 
 module.exports = router;
