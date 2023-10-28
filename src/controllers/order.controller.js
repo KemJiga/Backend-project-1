@@ -1,15 +1,37 @@
 const Order = require('../models/order.model');
 const Restaurant = require('../models/restaurant.model');
+const Product = require('../models/product.model');
 
 async function createOrder(req, res) {
-  const { user, restaurant, products, status } = req.body;
+  var total = 0;
+  const { user, restaurant, products } = req.body;
   const update = { $inc: { popularity: 1 }, updatedAt: Date.now() };
   try {
-    await Restaurant.findByIdAndUpdate(restaurant, update);
-    const newOrder = new Order({ user, restaurant, products: new Map(products), status });
-    await newOrder.save();
-    res.status(201).json(newOrder);
-    console.log('order added');
+    const rest = await Restaurant.findByIdAndUpdate(restaurant, update);
+    if (rest === null || rest.length === 0) {
+      res.status(404).json({ error: 'Restaurant not found' });
+    } else {
+      await Promise.all(products.map(async (p) => {
+        try {
+          const orderProduct = await Product.findById(p[0]);
+          total += orderProduct.price * p[1];
+        } catch (e) {
+          res.status(500).json({ error: e.message });
+        }
+        console.log(total);  
+      }));
+      console.log('final '+total);
+      const newOrder = new Order({
+        user,
+        restaurant,
+        products: new Map(products),
+        total,
+        status: 'Created',
+      });
+      await newOrder.save();
+      res.status(201).json(newOrder);
+      console.log('order added');
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -77,7 +99,7 @@ async function updateOrder(req, res) {
         const updatedOrder = await Order.findByIdAndUpdate(id, { products, status }, { new: true });
         res.status(200).json(updatedOrder);
         console.log('Order updated');
-      }else{
+      } else {
         res.status(400).json({ error: 'Order can not be updated' });
       }
     }

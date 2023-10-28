@@ -30,8 +30,13 @@ const orderSchema = new Schema({
     },
     products: {
         type: Map,
-        of: Number,
+        of: String,
         required: [true, "Order must have products"],
+    },
+    total:{
+      type: Number,
+      required: [true, "Order must have a total"],
+      //validate non negative
     },
     status: {
         type: String,
