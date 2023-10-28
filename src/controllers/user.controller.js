@@ -61,7 +61,8 @@ async function deleteUser(req, res) {
 }
 
 async function updateUser(req, res) {
-  const { id, name, email, password, phone } = req.body;
+  const { id } = req.params;
+  const { name, email, password, phone } = req.body;
   try {
     const user = await User.findOneAndUpdate(
       { _id: id, deletedAt: null },
