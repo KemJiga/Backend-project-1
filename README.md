@@ -1,6 +1,6 @@
 # Backend project 1 - RESTful API
 
-This is a RESTful API example based on Node.js and MongoDB, following the **MVC pattern** i.e. Model ~~View~~ Controller.
+This is a RESTful API example based on Node.js and MongoDB, following the **MVC pattern** i.e. Model View Controller.
 
 **Mongoose** is used for Database transactions.
 
