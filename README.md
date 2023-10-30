@@ -4,8 +4,6 @@ This is a RESTful API example based on Node.js and MongoDB, following the **MVC 
 
 **Mongoose** is used for Database transactions.
 
-The application is **production ready**, and can be used behind a Nginx reverse proxy securely.
-
 ---
 
 #### To start setting up the project
