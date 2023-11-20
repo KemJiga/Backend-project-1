@@ -6,7 +6,7 @@ This is a RESTful API example based on Node.js and MongoDB, following the **MVC 
 
 ---
 
-#### To start setting up the project
+## To start setting up the project
 
 Step 1: Clone the repo
 
