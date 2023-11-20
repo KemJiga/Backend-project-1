@@ -4,8 +4,6 @@ This is a RESTful API example based on Node.js and MongoDB, following the **MVC 
 
 **Mongoose** is used for Database transactions.
 
----
-
 ## To start setting up the project
 
 Step 1: Clone the repo
