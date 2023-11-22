@@ -33,7 +33,7 @@ npm start
 
 ## Author
 
-- [**KemJiga**](www.linkedin.com/in/kemjiga)
+- [**KemJiga**](www.linkedin.com/in/kemjiga/)
 
 ## License
 
